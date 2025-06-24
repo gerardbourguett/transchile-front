@@ -1,0 +1,46 @@
+# .github/workflows/deploy-pages.yml
+name: Deploy TransChile Front to GitHub Pages
+
+on:
+  # Se ejecuta en cada push a la rama 'main'
+  push:
+    branches: [main]
+
+# Permisos necesarios para que el job pueda escribir en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout del Código
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: 3. Instalar Dependencias
+        run: npm ci
+
+      - name: 4. Construir la Aplicación
+        # El comando 'build' compila el proyecto en la carpeta 'dist'
+        run: npm run build
+
+      - name: 5. Configurar GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: 6. Subir Artefacto de Despliegue
+        # Sube la carpeta 'dist' como un artefacto para el job de despliegue
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+
+      - name: 7. Desplegar a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

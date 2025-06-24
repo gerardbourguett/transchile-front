@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface ShipmentData {
   trackingId: string;
   status: string;
