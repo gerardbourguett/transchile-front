@@ -1,0 +1,11 @@
+/* Estilos personalizados para TransChile */
+/* Los estilos principales ahora se manejan con Tailwind CSS */
+
+/* Animación personalizada para el logo si es necesaria */
+.logo-transchile {
+  transition: transform 0.3s ease;
+}
+
+.logo-transchile:hover {
+  transform: scale(1.05);
+}
